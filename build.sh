@@ -6,12 +6,17 @@
 # Date: June 16, 2023
 # Description: This script automates compiling the P4 artifacts for esnet-smartnic-hw.
 
-if [ -z "$2" ]; then
-  DIR_NAME="app"
-  P4_PROGRAM="p4/p4_only.p4"
-else
-  DIR_NAME="$1"
-  P4_PROGRAM="$2"
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 <directory_name> <p4_program>"
+  exit 1
+fi
+
+DIR_NAME="$1"
+P4_PROGRAM="$2"
+
+if [ ! -f "$P4_PROGRAM" ]; then
+  echo "P4 program '$P4_PROGRAM' does not exist."
+  exit 1
 fi
 
 mkdir "$DIR_NAME" || {
